@@ -196,8 +196,3 @@ void reexamineDoors(DoorKind newDoorKind)
 void Car::reexamineDoors(DoorKind doorKind) {
     backseatDoors = doorKind;
 }
-
-
-int main() {
-    return 0;
-}
