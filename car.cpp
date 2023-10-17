@@ -3,6 +3,8 @@
 #include "car.hpp"
 #include <cstddef>
 #include <cstring>
+#include <iostream>
+
 
 /*
 private:
@@ -29,6 +31,20 @@ Car::Car():
     backseatDoors(None), 
     seatCount(0) 
 {};
+
+Car::Car(const Car& other) {
+    manufacturer = new char[strlen(other.manufacturer) + 1];
+    strcpy(manufacturer, other.manufacturer);
+
+    model = new char[strlen(other.model) + 1];
+    strcpy(model, other.model);
+
+    zeroToSixtyNs = other.zeroToSixtyNs;
+    headonDragCoeff = other.headonDragCoeff;
+    horsepower = other.horsepower;
+    backseatDoors = other.backseatDoors;
+    seatCount = other.seatCount;
+}
 
 /* 
 Car(char const* const manufacturerName, char const* const modelName, 
@@ -64,7 +80,10 @@ Car& operator=(Car const& o)
     Set the values of the variables in the current object to be those in o.
 */
 Car& Car::operator=(Car const& o) {
-    if (this != &o) { // self-assignment check
+    if (this != &o) { 
+        delete[] manufacturer;
+        delete[] model;
+        
         manufacturer = new char[strlen(o.manufacturer) + 1];
         strcpy(manufacturer, o.manufacturer);
 
@@ -83,16 +102,16 @@ Car& Car::operator=(Car const& o) {
 /*
 char const* getManufacturer() const
     Get the string of manufacturer.*/
-char const* Car:: getManufacturer() const{
-    return manufacturer;
+char const* Car::getManufacturer() const{
+    return manufacturer ? manufacturer : "Unknown";
 }
 
 /*
 char const* getModel() const
     Get the string of model.
 */
-char const* Car:: getModel() const{
-    return model;
+char const* Car::getModel() const{
+    return model ? model : "Unknown";
 }
 
 
@@ -173,19 +192,43 @@ void Car:: recountSeats(uint8_t newSeatCount){
 void reexamineDoors(DoorKind newDoorKind)
     Set the kind of the doors in backseatDoors to be newDoorKind.
 */
-void Car::setBackseatDoors(DoorKind doorKind) {
+void Car::reexamineDoors(DoorKind doorKind) {
     backseatDoors = doorKind;
 }
 
-/*
-testCopyAssign (0/9.5)
-testCopyConstruct (0/9.5)
-testGetSetDoors (0/9.5)
-testGetSetManufacturer (0/9.5)
-testGetSetModel (0/9.5)
-testGetSetSeats (0/9.5)
-testGetSetStats (0/9.5)
-*/
 
+int main() {
+    std::cout << "Program started." << std::endl;
+    // Test default constructor
+    Car car1;
+    std::cout << "Default constructor: " << car1.getManufacturer() << ", " << car1.getModel() << std::endl;
 
+    // Test parameterized constructor
+    PerformanceStats stats = {100, 200, 0.5f};
+    Car car2("Toyota", "Corolla", stats, 4, GullWing);
+    std::cout << "Parameterized constructor: " << car2.getManufacturer() << ", " << car2.getModel() << std::endl;
 
+    // Test copy constructor
+    Car car3(car2);
+    std::cout << "Copy constructor: " << car3.getManufacturer() << ", " << car3.getModel() << std::endl;
+
+    // Test copy assignment
+    car1 = car2;
+    std::cout << "Copy assignment: " << car1.getManufacturer() << ", " << car1.getModel() << std::endl;
+
+    // Test setters and getters
+    car1.manufacturerChange("Honda");
+    car1.modelNameChange("Civic");
+    car1.reevaluateStats({150, 250, 0.4f});
+    car1.recountSeats(5);
+    car1.reexamineDoors(Hinge);
+    std::cout << "After modifications:" << std::endl;
+    std::cout << "Manufacturer: " << car1.getManufacturer() << std::endl;
+    std::cout << "Model: " << car1.getModel() << std::endl;
+    PerformanceStats modifiedStats = car1.getStats();
+    std::cout << "Horsepower: " << modifiedStats.horsepower << ", Zero to Sixty: " << modifiedStats.zeroToSixtyNs << ", Drag Coefficient: " << modifiedStats.headonDragCoeff << std::endl;
+    std::cout << "Seat count: " << (int)car1.getSeatCount() << std::endl;
+    std::cout << "Door type: " << car1.getBackseatDoors() << std::endl;
+
+    return 0;
+}
