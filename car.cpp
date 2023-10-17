@@ -199,6 +199,5 @@ void Car::reexamineDoors(DoorKind doorKind) {
 
 
 int main() {
-    cout << "test started";
     return 0;
 }
