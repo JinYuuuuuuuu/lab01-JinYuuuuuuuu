@@ -24,19 +24,14 @@ Car()
     DoorKind variable is also initialized with None.
 */
 Car::Car():
+    manufacturer(nullptr), 
+    model(nullptr),
     zeroToSixtyNs(0), 
     headonDragCoeff(0.0f), 
     horsepower(0), 
     backseatDoors(None), 
     seatCount(0) 
-    
-{
-    manufacturer = new char[strlen("Unknown") + 1];
-    strcpy(manufacturer, "Unknown");
-
-    model = new char[strlen("Unknown") + 1];
-    strcpy(model, "Unknown");
-};
+{}
 
 /*
 Car(Car const& o)
@@ -114,7 +109,7 @@ Car& Car::operator=(Car const& o) {
 char const* getManufacturer() const
     Get the string of manufacturer.*/
 char const* Car::getManufacturer() const{
-    return manufacturer ? manufacturer : "Unknown";
+    return manufacturer;
 }
 
 /*
@@ -122,7 +117,7 @@ char const* getModel() const
     Get the string of model.
 */
 char const* Car::getModel() const{
-    return model ? model : "Unknown";
+    return modek;
 }
 
 
@@ -163,10 +158,13 @@ void manufacturerChange(char const* const newManufacturer)
 */
 void Car::manufacturerChange(char const* const newManufacturer) {
     delete[] manufacturer;
-    manufacturer = new char[strlen(newManufacturer) + 1];
-    strcpy(manufacturer, newManufacturer);
+    if (newManufacturer) {
+        manufacturer = new char[strlen(newManufacturer) + 1];
+        strcpy(manufacturer, newManufacturer);
+    } else {
+        manufacturer = nullptr;
+    }
 }
-
 
 /*
 void modelNameChange(char const* const newModelName)
@@ -174,8 +172,12 @@ void modelNameChange(char const* const newModelName)
 */
 void Car::modelNameChange(char const* const newModelName) {
     delete[] model;
-    model = new char[strlen(newModelName) + 1];
-    strcpy(model, newModelName);
+    if (newModelName) {
+        model = new char[strlen(newModelName) + 1];
+        strcpy(model, newModelName);
+    } else {
+        model = nullptr;
+    }
 }
 
 /*
