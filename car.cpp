@@ -3,6 +3,7 @@
 #include "car.hpp"
 #include <cstddef>
 #include <cstring>
+#include <iostream>
 
 /*
 private:
@@ -20,22 +21,32 @@ Car()
     Initialize the pointer type variables with NULL and the numerical variables with 0. 
     DoorKind variable is also initialized with None.
 */
-Car::Car(){};
+Car::Car():
+    manufacturer(nullptr), 
+    model(nullptr), 
+    zeroToSixtyNs(0), 
+    headonDragCoeff(0.0f), 
+    horsepower(0), 
+    backseatDoors(None), 
+    seatCount(0) 
+{};
 
 /* 
 Car(char const* const manufacturerName, char const* const modelName, 
 PerformanceStats perf, uint8_t numSeats, DoorKind backseatDoorDesign)
     Initialize the member variables with specific values.
 */
-Car(char const* const manufacturerName, char const* const modelName, 
+Car::Car(char const* const manufacturerName, char const* const modelName, 
 PerformanceStats perf, uint8_t numSeats, DoorKind backseatDoorDesign){
-    this.manufacturer = manufacturerName;
-    this.model = modelName;
-    this.zeroToSixtyNs = perf.zeroToSixtyNs;
-    this.headonDragCoeff = perf.headonDragCoeff;
-    this.horsepower = perf.horsepower;
-    this.backseatDoors = backseatDoorDesign;
-    this.seatCount = numSeats;
+    manufacturer = new char[strlen(manufacturerName) + 1];
+strcpy(manufacturer, manufacturerName);
+    model = new char[strlen(modelName) + 1];
+strcpy(model, modelName);
+    zeroToSixtyNs = perf.zeroToSixtyNs;
+    headonDragCoeff = perf.headonDragCoeff;
+    horsepower = perf.horsepower;
+    backseatDoors = backseatDoorDesign;
+    seatCount = numSeats;
 }
 
 
@@ -43,7 +54,7 @@ PerformanceStats perf, uint8_t numSeats, DoorKind backseatDoorDesign){
 Destructor : ~Car()
     Recycle the memory of variables.
 */
-~Car(){
+Car::~Car(){
     delete[] manufacturer;
     delete[] model;
 }
@@ -77,7 +88,7 @@ Car& Car::operator=(Car const& o) {
 /*
 char const* getManufacturer() const
     Get the string of manufacturer.*/
-char const* getManufacturer() const{
+char const* Car:: getManufacturer() const{
     return manufacturer;
 }
 
@@ -85,7 +96,7 @@ char const* getManufacturer() const{
 char const* getModel() const
     Get the string of model.
 */
-char const* getModel() const{
+char const* Car:: getModel() const{
     return model;
 }
 
@@ -96,8 +107,8 @@ PerformanceStats getStats() const
     It summarizes the three parameters horsepower, zeroToSixtyNs, and headonDragCoeff together. 
     This method gets their values and returns as the structure.
 */
-PerformanceStats getStats() const{
-    return constexpr PerformanceStats(horsepower, zeroToSixtyNs, headonDragCoeff);
+PerformanceStats Car::getStats() const{
+    return PerformanceStats{horsepower, zeroToSixtyNs, headonDragCoeff};
 }
 
 
@@ -105,7 +116,7 @@ PerformanceStats getStats() const{
 uint8_t getSeatCount() const
     Get the number of seats in seatCount.
 */
-uint8_t getSeatCount() const{
+uint8_t Car:: getSeatCount() const{
     return seatCount;
 }
 
@@ -114,7 +125,7 @@ uint8_t getSeatCount() const{
 DoorKind getBackseatDoors() const
     Get the type of the doors in backseatDoors.
 */
-DoorKind getBackseatDoors() const{
+DoorKind Car:: getBackseatDoors() const{
     return backseatDoors;
 }
 
@@ -125,8 +136,9 @@ void manufacturerChange(char const* const newManufacturer)
     Since the name is of the type string in the memory, 
     please care about the memory management and avoid the memory leak.
 */
-void manufacturerChange(char const* const newManufacturer){
-    this.manufacturer = newManufacturer;
+void Car::manufacturerChange(char const* const newManufacturer){
+    manufacturer = new char[strlen(newManufacturer) + 1];
+strcpy(manufacturer, newManufacturer);
 }
 
 
@@ -134,8 +146,9 @@ void manufacturerChange(char const* const newManufacturer){
 void modelNameChange(char const* const newModelName)
     Change the name (also string) in model to the new in newModelName.
 */
-void modelNameChange(char const* const newModelName){
-    this.model = newModelName;
+void Car::modelNameChange(char const* const newModelName){
+    model = new char[strlen(newModelName) + 1];
+strcpy(model, newModelName);
 }
 
 /*
@@ -143,10 +156,10 @@ void reevaluateStats(PerformanceStats newStats)
     Update the values of zeroToSixtyNs, headonDragCoeff and horsepower 
     by using the new parameters in newStats.
 */
-void reevaluateStats(PerformanceStats newStats){
-    this.zeroToSixtyNs = newStats.zeroToSixtyNs;
-    this.headonDragCoeff = newStats.headonDragCoeff;
-    this.horsepower = newStats.horsepower;
+void Car:: reevaluateStats(PerformanceStats newStats){
+    zeroToSixtyNs = newStats.zeroToSixtyNs;
+    headonDragCoeff = newStats.headonDragCoeff;
+    horsepower = newStats.horsepower;
 }
 
 
@@ -154,8 +167,8 @@ void reevaluateStats(PerformanceStats newStats){
 void recountSeats(uint8_t newSeatCount)
     Set the value of seatCount to be newSeatCount.
 */
-void recountSeats(uint8_t newSeatCount){
-    this.seatCount = newSeatCount;
+void Car:: recountSeats(uint8_t newSeatCount){
+    seatCount = newSeatCount;
 }
 
 
@@ -163,6 +176,17 @@ void recountSeats(uint8_t newSeatCount){
 void reexamineDoors(DoorKind newDoorKind)
     Set the kind of the doors in backseatDoors to be newDoorKind.
 */
-void reexamineDoors(DoorKind newDoorKind){
-    this.backseatDoors = newDoorKind;
+void Car:: reexamineDoors(DoorKind newDoorKind){
+    backseatDoors = newDoorKind;
+}
+
+int main() {
+    Car car1;
+    // Use getters to check default values
+    if (car1.getManufacturer() == NULL && car1.getModel() == NULL && car1.getSeatCount() == 0) {
+        std::cout << "Default constructor works correctly." << std::endl;
+    } else {
+        std::cout << "Default constructor has an issue." << std::endl;
+    }
+    return 0;
 }
