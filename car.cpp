@@ -38,6 +38,24 @@ Car::Car():
     strcpy(model, "Unknown");
 };
 
+/*
+Car(Car const& o)
+    Copy constructor. 
+    Initialize the member variables with the values in o.
+*/
+Car::Car(Car const& o) {
+    manufacturer = new char[strlen(o.manufacturer) + 1];
+    strcpy(manufacturer, o.manufacturer);
+
+    model = new char[strlen(o.model) + 1];
+    strcpy(model, o.model);
+
+    zeroToSixtyNs = o.zeroToSixtyNs;
+    headonDragCoeff = o.headonDragCoeff;
+    horsepower = o.horsepower;
+    backseatDoors = o.backseatDoors;
+    seatCount = o.seatCount;
+}
 
 /* 
 Car(char const* const manufacturerName, char const* const modelName, 
