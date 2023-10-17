@@ -24,14 +24,19 @@ Car()
     DoorKind variable is also initialized with None.
 */
 Car::Car():
-    manufacturer(nullptr), 
-    model(nullptr), 
     zeroToSixtyNs(0), 
     headonDragCoeff(0.0f), 
     horsepower(0), 
     backseatDoors(None), 
     seatCount(0) 
-{};
+    
+{
+    manufacturer = new char[strlen("Unknown") + 1];
+    strcpy(manufacturer, "Unknown");
+
+    model = new char[strlen("Unknown") + 1];
+    strcpy(model, "Unknown");
+};
 
 Car::Car(const Car& other) {
     manufacturer = new char[strlen(other.manufacturer) + 1];
@@ -152,7 +157,7 @@ void manufacturerChange(char const* const newManufacturer)
     please care about the memory management and avoid the memory leak.
 */
 void Car::manufacturerChange(char const* const newManufacturer) {
-    //delete[] manufacturer;
+    delete[] manufacturer;
     manufacturer = new char[strlen(newManufacturer) + 1];
     strcpy(manufacturer, newManufacturer);
 }
@@ -163,7 +168,7 @@ void modelNameChange(char const* const newModelName)
     Change the name (also string) in model to the new in newModelName.
 */
 void Car::modelNameChange(char const* const newModelName) {
-    //delete[] model;
+    delete[] model;
     model = new char[strlen(newModelName) + 1];
     strcpy(model, newModelName);
 }
