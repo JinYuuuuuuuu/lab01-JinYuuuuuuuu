@@ -117,7 +117,7 @@ char const* getModel() const
     Get the string of model.
 */
 char const* Car::getModel() const{
-    return modek;
+    return model;
 }
 
 
