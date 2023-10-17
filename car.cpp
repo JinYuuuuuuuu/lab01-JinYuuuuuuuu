@@ -152,7 +152,7 @@ void manufacturerChange(char const* const newManufacturer)
     please care about the memory management and avoid the memory leak.
 */
 void Car::manufacturerChange(char const* const newManufacturer) {
-    delete[] manufacturer;  // Avoid memory leak
+    //delete[] manufacturer;
     manufacturer = new char[strlen(newManufacturer) + 1];
     strcpy(manufacturer, newManufacturer);
 }
@@ -163,7 +163,7 @@ void modelNameChange(char const* const newModelName)
     Change the name (also string) in model to the new in newModelName.
 */
 void Car::modelNameChange(char const* const newModelName) {
-    delete[] model;  // Avoid memory leak
+    //delete[] model;
     model = new char[strlen(newModelName) + 1];
     strcpy(model, newModelName);
 }
