@@ -58,7 +58,6 @@ Car::~Car(){
     delete[] model;
 }
 
-
 /*
 Car& operator=(Car const& o)
     Overloaded assignment operator =. 
@@ -66,9 +65,6 @@ Car& operator=(Car const& o)
 */
 Car& Car::operator=(Car const& o) {
     if (this != &o) { // self-assignment check
-        delete[] manufacturer;
-        delete[] model;
-
         manufacturer = new char[strlen(o.manufacturer) + 1];
         strcpy(manufacturer, o.manufacturer);
 
@@ -135,9 +131,10 @@ void manufacturerChange(char const* const newManufacturer)
     Since the name is of the type string in the memory, 
     please care about the memory management and avoid the memory leak.
 */
-void Car::manufacturerChange(char const* const newManufacturer){
+void Car::manufacturerChange(char const* const newManufacturer) {
+    delete[] manufacturer;  // Avoid memory leak
     manufacturer = new char[strlen(newManufacturer) + 1];
-strcpy(manufacturer, newManufacturer);
+    strcpy(manufacturer, newManufacturer);
 }
 
 
@@ -145,9 +142,10 @@ strcpy(manufacturer, newManufacturer);
 void modelNameChange(char const* const newModelName)
     Change the name (also string) in model to the new in newModelName.
 */
-void Car::modelNameChange(char const* const newModelName){
+void Car::modelNameChange(char const* const newModelName) {
+    delete[] model;  // Avoid memory leak
     model = new char[strlen(newModelName) + 1];
-strcpy(model, newModelName);
+    strcpy(model, newModelName);
 }
 
 /*
@@ -175,6 +173,19 @@ void Car:: recountSeats(uint8_t newSeatCount){
 void reexamineDoors(DoorKind newDoorKind)
     Set the kind of the doors in backseatDoors to be newDoorKind.
 */
-void Car:: reexamineDoors(DoorKind newDoorKind){
-    backseatDoors = newDoorKind;
+void Car::setBackseatDoors(DoorKind doorKind) {
+    backseatDoors = doorKind;
 }
+
+/*
+testCopyAssign (0/9.5)
+testCopyConstruct (0/9.5)
+testGetSetDoors (0/9.5)
+testGetSetManufacturer (0/9.5)
+testGetSetModel (0/9.5)
+testGetSetSeats (0/9.5)
+testGetSetStats (0/9.5)
+*/
+
+
+
