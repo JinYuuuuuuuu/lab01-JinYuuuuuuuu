@@ -3,7 +3,6 @@
 #include "car.hpp"
 #include <cstddef>
 #include <cstring>
-#include <iostream>
 
 /*
 private:
@@ -178,15 +177,4 @@ void reexamineDoors(DoorKind newDoorKind)
 */
 void Car:: reexamineDoors(DoorKind newDoorKind){
     backseatDoors = newDoorKind;
-}
-
-int main() {
-    Car car1;
-    // Use getters to check default values
-    if (car1.getManufacturer() == NULL && car1.getModel() == NULL && car1.getSeatCount() == 0) {
-        std::cout << "Default constructor works correctly." << std::endl;
-    } else {
-        std::cout << "Default constructor has an issue." << std::endl;
-    }
-    return 0;
 }
