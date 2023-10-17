@@ -38,19 +38,6 @@ Car::Car():
     strcpy(model, "Unknown");
 };
 
-Car::Car(const Car& other) {
-    manufacturer = new char[strlen(other.manufacturer) + 1];
-    strcpy(manufacturer, other.manufacturer);
-
-    model = new char[strlen(other.model) + 1];
-    strcpy(model, other.model);
-
-    zeroToSixtyNs = other.zeroToSixtyNs;
-    headonDragCoeff = other.headonDragCoeff;
-    horsepower = other.horsepower;
-    backseatDoors = other.backseatDoors;
-    seatCount = other.seatCount;
-}
 
 /* 
 Car(char const* const manufacturerName, char const* const modelName, 
