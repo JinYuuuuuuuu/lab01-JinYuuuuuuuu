@@ -5,6 +5,7 @@
 #include <cstring>
 #include <iostream>
 
+using namespace std;
 
 /*
 private:
@@ -198,37 +199,6 @@ void Car::reexamineDoors(DoorKind doorKind) {
 
 
 int main() {
-    std::cout << "Program started." << std::endl;
-    // Test default constructor
-    Car car1;
-    std::cout << "Default constructor: " << car1.getManufacturer() << ", " << car1.getModel() << std::endl;
-
-    // Test parameterized constructor
-    PerformanceStats stats = {100, 200, 0.5f};
-    Car car2("Toyota", "Corolla", stats, 4, GullWing);
-    std::cout << "Parameterized constructor: " << car2.getManufacturer() << ", " << car2.getModel() << std::endl;
-
-    // Test copy constructor
-    Car car3(car2);
-    std::cout << "Copy constructor: " << car3.getManufacturer() << ", " << car3.getModel() << std::endl;
-
-    // Test copy assignment
-    car1 = car2;
-    std::cout << "Copy assignment: " << car1.getManufacturer() << ", " << car1.getModel() << std::endl;
-
-    // Test setters and getters
-    car1.manufacturerChange("Honda");
-    car1.modelNameChange("Civic");
-    car1.reevaluateStats({150, 250, 0.4f});
-    car1.recountSeats(5);
-    car1.reexamineDoors(Hinge);
-    std::cout << "After modifications:" << std::endl;
-    std::cout << "Manufacturer: " << car1.getManufacturer() << std::endl;
-    std::cout << "Model: " << car1.getModel() << std::endl;
-    PerformanceStats modifiedStats = car1.getStats();
-    std::cout << "Horsepower: " << modifiedStats.horsepower << ", Zero to Sixty: " << modifiedStats.zeroToSixtyNs << ", Drag Coefficient: " << modifiedStats.headonDragCoeff << std::endl;
-    std::cout << "Seat count: " << (int)car1.getSeatCount() << std::endl;
-    std::cout << "Door type: " << car1.getBackseatDoors() << std::endl;
-
+    cout << "test started";
     return 0;
 }
